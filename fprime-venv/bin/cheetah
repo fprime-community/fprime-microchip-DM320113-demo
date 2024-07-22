@@ -1,0 +1,3 @@
+#!/home/dtriska/fprime/MyProject3/fprime-venv/bin/python3
+from Cheetah.CheetahWrapper import _cheetah
+_cheetah()
