@@ -38,8 +38,9 @@ include_directories(SYSTEM "${CMAKE_CURRENT_LIST_DIR}/FreeRTOS/Source/portable/M
 include_directories(SYSTEM "${CMAKE_CURRENT_LIST_DIR}/types")
 
 # Choose FreeRTOS specific implementations for Os/File and Os/Task
+# MAY BE SOMETHING THAT HAS TO BE IMPLEMENTED
 # choose_fprime_implementation(Os/File Os/File/Stub)
-choose_fprime_implementation(Os/Task Os/freeRTOS/Task)
+# choose_fprime_implementation(Os/Task Os/freeRTOS/Task)
 
 # Remove default Queue.hpp and replace with FreeRTOS-specific Queue.hpp
 if (FPRIME_USE_FREERTOS_SCHEDULER)

@@ -42,10 +42,10 @@ namespace Os {
     TaskRegistry::TaskRegistry() {
 
     }
-
-    Task::TaskStatus Task::start(const Fw::StringBase &name, NATIVE_INT_TYPE identifier, NATIVE_INT_TYPE priority, NATIVE_INT_TYPE stackSize, taskRoutine routine, void* arg, NATIVE_INT_TYPE cpuAffinity) {
-        return this->start(name, routine, arg, priority, stackSize, cpuAffinity, identifier);
-    }
+    // FreeRTOS start in freeRTOS/Task.cpp is used
+    // Task::TaskStatus Task::start(const Fw::StringBase &name, NATIVE_INT_TYPE identifier, NATIVE_INT_TYPE priority, NATIVE_INT_TYPE stackSize, taskRoutine routine, void* arg, NATIVE_INT_TYPE cpuAffinity) {
+    //     return this->start(name, routine, arg, priority, stackSize, cpuAffinity, identifier);
+    // }
 
     TaskRegistry::~TaskRegistry() {
 
