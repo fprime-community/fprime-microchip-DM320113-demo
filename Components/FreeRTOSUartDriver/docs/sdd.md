@@ -1,6 +1,6 @@
-# Components::SamE70UartDriver
+# Components::FreeRTOSUartDriver
 
-Uart Driver to be used with DM320113 demo
+A Uart driver for the DM320113 Demo
 
 ## Usage Examples
 Add usage examples here

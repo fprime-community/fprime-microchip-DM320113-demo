@@ -7,8 +7,8 @@
 #
 ####
 set(SOURCE_FILES
-  "${CMAKE_CURRENT_LIST_DIR}/SamE70UartDriver.fpp"
-  "${CMAKE_CURRENT_LIST_DIR}/SamE70UartDriver.cpp"
+  "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSUartDriver.fpp"
+  "${CMAKE_CURRENT_LIST_DIR}/FreeRTOSUartDriver.cpp"
 )
 
 # Uncomment and add any modules that this component depends on, else

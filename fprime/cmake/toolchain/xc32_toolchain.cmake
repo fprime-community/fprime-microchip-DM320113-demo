@@ -10,9 +10,6 @@ set(XC32_DIR /opt/microchip/xc32/v4.40)
 set(CMAKE_C_COMPILER ${XC32_DIR}/bin/xc32-gcc)
 set(CMAKE_CXX_COMPILER ${XC32_DIR}/bin/xc32-g++)
 
-# Include the platform configuration
-# include("${CMAKE_CURRENT_LIST_DIR}/sam_e70_xult.cmake")
-
 # Path to root of toolchain package
 set(CMAKE_FIND_ROOT_PATH /opt/microchip/xc32/v4.40)
 
@@ -24,7 +21,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
 # Toolchain Specific
-set(BUILD_FW_DP OFF CACHE BOOL "Build Fw/Dp components")
+# set(BUILD_FW_DP OFF CACHE BOOL "Build Fw/Dp components")
 
 # Set the compiler flags
 set(CMAKE_C_FLAGS_INIT "-mprocessor=ATSAME70Q21B -D__SAME70Q21B__ -isystem ${XC32_DIR}/include -isystem /opt/microchip/mplabx/v6.20/packs/Microchip/SAME70_DFP/4.10.248/same70b/xc32/include -isystem /opt/microchip/mplabx/v6.20/packs/Microchip/SAME70_DFP/4.10.248/same70b/include_mcc -isystem /opt/microchip/mplabx/v6.20/packs/Microchip/SAME70_DFP/4.10.248/same70b/include")
