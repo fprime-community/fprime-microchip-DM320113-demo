@@ -30,13 +30,31 @@ namespace Components {
   // Handler implementations for user-defined typed input ports
   // ----------------------------------------------------------------------
 
-  Drv::SendStatus FreeRTOSUartDriver ::
-    send_handler(
+  void FreeRTOSUartDriver ::
+    readPoll_handler(
         NATIVE_INT_TYPE portNum,
-        Fw::Buffer& sendBuffer
+        Fw::Buffer& fwBuffer
     )
   {
-    // TODO return
+    // TODO
+  }
+
+  void FreeRTOSUartDriver ::
+    schedIn_handler(
+        NATIVE_INT_TYPE portNum,
+        NATIVE_UINT_TYPE context
+    )
+  {
+    // TODO
+  }
+
+  void FreeRTOSUartDriver ::
+    write_handler(
+        NATIVE_INT_TYPE portNum,
+        Fw::Buffer& fwBuffer
+    )
+  {
+    // TODO
   }
 
 }

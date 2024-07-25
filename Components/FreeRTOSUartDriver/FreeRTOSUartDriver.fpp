@@ -1,24 +1,26 @@
 module Components {
-    @ A Uart driver for the DM320113 Demo
-    passive component FreeRTOSUartDriver {
+
+  passive component FreeRTOSUartDriver {
 
     # ----------------------------------------------------------------------
     # General ports
     # ----------------------------------------------------------------------
 
-    include "ByteStreamDriverInterface.fppi"
+    @ Write data to UART
+    sync input port write: Fw.BufferSend
+
+    @ Read data from UART using polling
+    sync input port readPoll: Fw.BufferSend
+
+    @ Read data from UART using callback
+    output port readCallback: Fw.BufferSend
+
+    @ Scheduler input
+    sync input port schedIn: Svc.Sched
 
     # ----------------------------------------------------------------------
     # Special ports
     # ----------------------------------------------------------------------
-
-    event port Log
-
-    telemetry port Tlm
-
-    # text event port LogText
-
-    # time get port Time
 
     # ----------------------------------------------------------------------
     # Events
@@ -28,7 +30,6 @@ module Components {
     # Telemetry
     # ----------------------------------------------------------------------
 
-    include "Telemetry.fppi"
-
   }
+
 }
