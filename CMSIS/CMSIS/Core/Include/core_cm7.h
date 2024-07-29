@@ -22,6 +22,8 @@
  * limitations under the License.
  */
 
+#include <same70q21b.h>
+
 #if   defined ( __ICCARM__ )
   #pragma system_include         /* treat file as system include file for MISRA check */
 #elif defined (__clang__)

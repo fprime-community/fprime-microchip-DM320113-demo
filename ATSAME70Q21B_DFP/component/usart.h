@@ -20,6 +20,10 @@
  *
  */
 
+#include "core_cm7.h" 
+#include <stdint.h>  // Ensure standard integer types are included
+#include "PlatformTypes.h"  // Include platform-specific types
+
 /* file generated from device description version 2023-03-27T04:09:33Z */
 #ifndef _SAME70_USART_COMPONENT_H_
 #define _SAME70_USART_COMPONENT_H_
