@@ -51,13 +51,13 @@ enum TopologyConstants {
     HEALTH_WATCHDOG_CODE = 0x123,
     COMM_PRIORITY = 100,
     // bufferManager constants
-    // FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + HASH_DIGEST_LENGTH + Svc::FpFrameHeader::SIZE,
-    // FRAMER_BUFFER_COUNT = 30,
-    // DEFRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)),
-    // DEFRAMER_BUFFER_COUNT = 30,
-    // COM_DRIVER_BUFFER_SIZE = 3000,
-    // COM_DRIVER_BUFFER_COUNT = 30,
-    // BUFFER_MANAGER_ID = 200
+    FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + HASH_DIGEST_LENGTH + Svc::FpFrameHeader::SIZE,
+    FRAMER_BUFFER_COUNT = 30,
+    DEFRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)),
+    DEFRAMER_BUFFER_COUNT = 30,
+    COM_DRIVER_BUFFER_SIZE = 3000,
+    COM_DRIVER_BUFFER_COUNT = 30,
+    BUFFER_MANAGER_ID = 200
 };
 
 // Ping entries are autocoded, however; this code is not properly exported. Thus, it is copied here.
@@ -65,7 +65,7 @@ Svc::Health::PingEntry pingEntries[] = {
     {PingEntries::blockDrv::WARN, PingEntries::blockDrv::FATAL, "blockDrv"},
     {PingEntries::tlmSend::WARN, PingEntries::tlmSend::FATAL, "chanTlm"},
     {PingEntries::cmdDisp::WARN, PingEntries::cmdDisp::FATAL, "cmdDisp"},
-    // {PingEntries::cmdSeq::WARN, PingEntries::cmdSeq::FATAL, "cmdSeq"},
+    {PingEntries::cmdSeq::WARN, PingEntries::cmdSeq::FATAL, "cmdSeq"},
     {PingEntries::eventLogger::WARN, PingEntries::eventLogger::FATAL, "eventLogger"},
     {PingEntries::fileDownlink::WARN, PingEntries::fileDownlink::FATAL, "fileDownlink"},
     {PingEntries::fileManager::WARN, PingEntries::fileManager::FATAL, "fileManager"},
@@ -85,7 +85,7 @@ Svc::Health::PingEntry pingEntries[] = {
  */
 void configureTopology() {
     // Command sequencer needs to allocate memory to hold contents of command sequences
-    // cmdSeq.allocateBuffer(0, mallocator, CMD_SEQ_BUFFER_SIZE);
+    cmdSeq.allocateBuffer(0, mallocator, CMD_SEQ_BUFFER_SIZE);
 
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
@@ -107,15 +107,15 @@ void configureTopology() {
     health.setPingEntries(pingEntries, FW_NUM_ARRAY_ELEMENTS(pingEntries), HEALTH_WATCHDOG_CODE);
 
     // Buffer managers need a configured set of buckets and an allocator used to allocate memory for those buckets.
-    // Svc::BufferManager::BufferBins upBuffMgrBins;
-    // memset(&upBuffMgrBins, 0, sizeof(upBuffMgrBins));
-    // upBuffMgrBins.bins[0].bufferSize = FRAMER_BUFFER_SIZE;
-    // upBuffMgrBins.bins[0].numBuffers = FRAMER_BUFFER_COUNT;
-    // upBuffMgrBins.bins[1].bufferSize = DEFRAMER_BUFFER_SIZE;
-    // upBuffMgrBins.bins[1].numBuffers = DEFRAMER_BUFFER_COUNT;
-    // upBuffMgrBins.bins[2].bufferSize = COM_DRIVER_BUFFER_SIZE;
-    // upBuffMgrBins.bins[2].numBuffers = COM_DRIVER_BUFFER_COUNT;
-    // bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, upBuffMgrBins);
+    Svc::BufferManager::BufferBins upBuffMgrBins;
+    memset(&upBuffMgrBins, 0, sizeof(upBuffMgrBins));
+    upBuffMgrBins.bins[0].bufferSize = FRAMER_BUFFER_SIZE;
+    upBuffMgrBins.bins[0].numBuffers = FRAMER_BUFFER_COUNT;
+    upBuffMgrBins.bins[1].bufferSize = DEFRAMER_BUFFER_SIZE;
+    upBuffMgrBins.bins[1].numBuffers = DEFRAMER_BUFFER_COUNT;
+    upBuffMgrBins.bins[2].bufferSize = COM_DRIVER_BUFFER_SIZE;
+    upBuffMgrBins.bins[2].numBuffers = COM_DRIVER_BUFFER_COUNT;
+    bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, upBuffMgrBins);
 
     // Framer and Deframer components need to be passed a protocol handler
     framer.setup(framing);
@@ -154,9 +154,9 @@ void setupTopology(const TopologyState& state) {
     if (state.uartDevice != nullptr) {
         Os::TaskString name("ReceiveTask");
         // Uplink is configured for receive so a socket task is started
-        //if (comDriver.open(state.uartDevice, static_cast<Drv::LinuxUartDriver::UartBaudRate>(state.baudRate), 
-          //                 Drv::LinuxUartDriver::NO_FLOW, Drv::LinuxUartDriver::PARITY_NONE, Svc::DeframerCfg::RING_BUFFER_SIZE)) {
-            //comDriver.startReadThread(COMM_PRIORITY, Default::STACK_SIZE);
+        if (comDriver.open(state.uartDevice, static_cast<Components::usart1Driver::UartBaudRate>(state.baudRate), 
+                           Components::usart1Driver::NO_FLOW, Components::usart1Driver::PARITY_NONE, Svc::DeframerCfg::RING_BUFFER_SIZE)) {
+            comDriver.startReadThread(COMM_PRIORITY, Default::STACK_SIZE);
         } else {
             printf("Failed to open UART device %s at baud rate %" PRIu32 "\n", state.uartDevice, state.baudRate);
         }
@@ -195,10 +195,11 @@ void teardownTopology(const TopologyState& state) {
     freeThreads(state);
 
     // Other task clean-up.
-    // comDriver.quitReadThread();
-    // (void)comDriver.join(nullptr);
+    comDriver.quitReadThread();
+    (void)comDriver.join(nullptr);
 
     // Resource deallocation
-    // cmdSeq.deallocateBuffer(mallocator);
-    // bufferManager.cleanup();
-} ;  // namespace RefDemo
+    cmdSeq.deallocateBuffer(mallocator);
+    bufferManager.cleanup();
+}
+};  // namespace RefDemo

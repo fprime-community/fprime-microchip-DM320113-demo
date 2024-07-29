@@ -20,5 +20,7 @@ module Components {
         @ Takes data to transmit out the UART device
         output port $recv: Drv.ByteStreamRecv
 
+        sync input port writeUSART1: Drv.ByteStreamSend
+
     }
 }

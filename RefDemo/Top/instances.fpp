@@ -38,10 +38,10 @@ module RefDemo {
     stack size Default.STACK_SIZE \
     priority 101
 
-  # instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
-  #  queue size Default.QUEUE_SIZE \
-  #  stack size Default.STACK_SIZE \
-  #  priority 100
+   instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 100
 
   instance comQueue: Svc.ComQueue base id 0x0700 \
       queue size Default.QUEUE_SIZE \
@@ -99,7 +99,7 @@ module RefDemo {
   # ----------------------------------------------------------------------
 
   @ Communications driver. May be swapped with other com drivers like UART or TCP
-  #instance comDriver: Drv.LinuxUartDriver base id 0x4000
+  instance comDriver: Components.usart1Driver base id 0x4000
 
   instance framer: Svc.Framer base id 0x4100
 
@@ -107,7 +107,7 @@ module RefDemo {
 
   instance fatalHandler: Svc.FatalHandler base id 0x4300
 
-  # instance bufferManager: Svc.BufferManager base id 0x4400
+  instance bufferManager: Svc.BufferManager base id 0x4400
 
   # instance posixTime: Svc.PosixTime base id 0x4500
 

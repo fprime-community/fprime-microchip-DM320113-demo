@@ -20,8 +20,8 @@ module RefDemo {
     instance blockDrv
     instance tlmSend
     instance cmdDisp
-    # instance cmdSeq
-    # instance comDriver
+    instance cmdSeq
+    instance comDriver
     instance comQueue
     instance comStub
     instance deframer
@@ -31,7 +31,7 @@ module RefDemo {
     instance fileDownlink
     instance fileManager
     instance fileUplink
-    # instance bufferManager
+    instance bufferManager
     instance framer
     # instance posixTime
     instance prmDb
@@ -73,16 +73,16 @@ module RefDemo {
       comQueue.comQueueSend -> framer.comIn
       comQueue.buffQueueSend -> framer.bufferIn
 
-      # framer.framedAllocate -> bufferManager.bufferGetCallee
+      framer.framedAllocate -> bufferManager.bufferGetCallee
       framer.framedOut -> comStub.comDataIn
       framer.bufferDeallocate -> fileDownlink.bufferReturn
 
-      # comDriver.deallocate -> bufferManager.bufferSendIn
-      # comDriver.ready -> comStub.drvConnected
+      comDriver.deallocate -> bufferManager.bufferSendIn
+      comDriver.ready -> comStub.drvConnected
 
       comStub.comStatus -> framer.comStatusIn
       framer.comStatusOut -> comQueue.comStatusIn
-      # comStub.drvDataOut -> comDriver.$send
+      comStub.drvDataOut -> comDriver.writeUSART1
 
     }
 
@@ -102,35 +102,35 @@ module RefDemo {
 
       # Rate group 2
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
-      # rateGroup2.RateGroupMemberOut[0] -> cmdSeq.schedIn
+      rateGroup2.RateGroupMemberOut[0] -> cmdSeq.schedIn
 
       # Rate group 3
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
       rateGroup3.RateGroupMemberOut[0] -> $health.Run
       rateGroup3.RateGroupMemberOut[1] -> blockDrv.Sched
-      # rateGroup3.RateGroupMemberOut[2] -> bufferManager.schedIn
+      rateGroup3.RateGroupMemberOut[2] -> bufferManager.schedIn
     }
 
     connections Sequencer {
-      # cmdSeq.comCmdOut -> cmdDisp.seqCmdBuff
-      # cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
+     cmdSeq.comCmdOut -> cmdDisp.seqCmdBuff
+     cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
     }
 
     connections Uplink {
 
-      # comDriver.allocate -> bufferManager.bufferGetCallee
-      # comDriver.$recv -> comStub.drvDataIn
+      comDriver.allocate -> bufferManager.bufferGetCallee
+      comDriver.$recv -> comStub.drvDataIn
       comStub.comDataOut -> deframer.framedIn
 
-      # deframer.framedDeallocate -> bufferManager.bufferSendIn
+      deframer.framedDeallocate -> bufferManager.bufferSendIn
       deframer.comOut -> cmdDisp.seqCmdBuff
 
       cmdDisp.seqCmdStatus -> deframer.cmdResponseIn
 
-      # deframer.bufferAllocate -> bufferManager.bufferGetCallee
+      deframer.bufferAllocate -> bufferManager.bufferGetCallee
       deframer.bufferOut -> fileUplink.bufferSendIn
-      # deframer.bufferDeallocate -> bufferManager.bufferSendIn
-      # fileUplink.bufferSendOut -> bufferManager.bufferSendIn
+      deframer.bufferDeallocate -> bufferManager.bufferSendIn
+      fileUplink.bufferSendOut -> bufferManager.bufferSendIn
     }
 
     connections RefDemo {

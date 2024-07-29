@@ -12,11 +12,12 @@ set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/RefDemoTopology.cpp"
 )
 set(MOD_DEPS
-  # Fw/Logger
+  Fw/Logger
   # Svc/PosixTime
   # Communication Implementations
   # Drv/Udp
   # Drv/LinuxUartDriver
+  Components/usart1Driver
 )
 
 register_fprime_module()

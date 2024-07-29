@@ -56,9 +56,9 @@ enum { WARN = 3, FATAL = 5 };
 namespace cmdDisp {
 enum { WARN = 3, FATAL = 5 };
 }
-// namespace cmdSeq {
-// enum { WARN = 3, FATAL = 5 };
-// }
+namespace cmdSeq {
+enum { WARN = 3, FATAL = 5 };
+}
 namespace eventLogger {
 enum { WARN = 3, FATAL = 5 };
 }

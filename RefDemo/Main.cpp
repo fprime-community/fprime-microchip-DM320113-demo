@@ -31,9 +31,9 @@ void print_usage(const char* app) {
  *
  * @param signum
  */
-// static void signalHandler(int signum) {
-//     RefDemo::stopSimulatedCycle();
-// }
+static void signalHandler(int signum) {
+    RefDemo::stopSimulatedCycle();
+}
 
 /**
  * \brief execute the program
@@ -46,45 +46,45 @@ void print_usage(const char* app) {
  * @return: 0 on success, something else on failure
  */
 int main(int argc, char* argv[]) {
-    // I32 option = 0;
-    // CHAR* uart_device = nullptr;
-    // U32 baud_rate = 0;
+    I32 option = 0;
+    CHAR* uart_device = nullptr;
+    U32 baud_rate = 0;
 
-    // // Loop while reading the getopt supplied options
-    // while ((option = getopt(argc, argv, "hb:d:")) != -1) {
-    //     switch (option) {
-    //         // Handle the -b baud rate argument
-    //         case 'b':
-    //             baud_rate = static_cast<U32>(atoi(optarg));
-    //             break;
-    //         // Handle the -d device argument
-    //         case 'd':
-    //             uart_device = optarg;
-    //             break;
-    //         // Cascade intended: help output
-    //         case 'h':
-    //         // Cascade intended: help output
-    //         case '?':
-    //         // Default case: output help and exit
-    //         default:
-    //             print_usage(argv[0]);
-    //             return (option == 'h') ? 0 : 1;
-    //     }
-    // }
-    // // Object for communicating state to the reference topology
-    // RefDemo::TopologyState inputs;
-    // inputs.baudRate = baud_rate;
-    // inputs.uartDevice = uart_device;
+    // Loop while reading the getopt supplied options
+    while ((option = getopt(argc, argv, "hb:d:")) != -1) {
+        switch (option) {
+            // Handle the -b baud rate argument
+            case 'b':
+                baud_rate = static_cast<U32>(atoi(optarg));
+                break;
+            // Handle the -d device argument
+            case 'd':
+                uart_device = optarg;
+                break;
+            // Cascade intended: help output
+            case 'h':
+            // Cascade intended: help output
+            case '?':
+            // Default case: output help and exit
+            default:
+                print_usage(argv[0]);
+                return (option == 'h') ? 0 : 1;
+        }
+    }
+    // Object for communicating state to the reference topology
+    RefDemo::TopologyState inputs;
+    inputs.baudRate = baud_rate;
+    inputs.uartDevice = uart_device;
 
-    // // Setup program shutdown via Ctrl-C
-    // signal(SIGINT, signalHandler);
-    // signal(SIGTERM, signalHandler);
-    // (void)printf("Hit Ctrl-C to quit\n");
+    // Setup program shutdown via Ctrl-C
+    signal(SIGINT, signalHandler);
+    signal(SIGTERM, signalHandler);
+    (void)printf("Hit Ctrl-C to quit\n");
 
-    // // Setup, cycle, and teardown topology
-    // RefDemo::setupTopology(inputs);
-    // RefDemo::startSimulatedCycle(1000);  // Program loop cycling rate groups at 1Hz
-    // RefDemo::teardownTopology(inputs);
-    // (void)printf("Exiting...\n");
+    // Setup, cycle, and teardown topology
+    RefDemo::setupTopology(inputs);
+    RefDemo::startSimulatedCycle(1000);  // Program loop cycling rate groups at 1Hz
+    RefDemo::teardownTopology(inputs);
+    (void)printf("Exiting...\n");
     return 0;
 }
