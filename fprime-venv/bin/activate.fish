@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/dtriska/fprime/MyProject3/fprime-venv"
+set -gx VIRTUAL_ENV "/home/dtriska/new-demo/fprime-microchip-DM320113-demo/fprime-venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

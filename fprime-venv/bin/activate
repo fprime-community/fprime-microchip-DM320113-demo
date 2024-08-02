@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/dtriska/fprime/MyProject3/fprime-venv"
+VIRTUAL_ENV="/home/dtriska/new-demo/fprime-microchip-DM320113-demo/fprime-venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
