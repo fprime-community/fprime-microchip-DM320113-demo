@@ -1,0 +1,2 @@
+# add_fprime_subdirectory{"$CMAKE_CURRENT_LIST_DIR/fprime/Os/freeRTOS"}
+add_fprime_subdirectory{"$CMAKE_CURRENT_LIST_DIR/cmake/platform"}
