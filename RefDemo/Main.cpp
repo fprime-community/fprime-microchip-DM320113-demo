@@ -12,6 +12,18 @@
 // Used for printf functions
 #include <cstdlib>
 
+extern "C" {
+#include <FreeRTOS.h>
+#include <task.h>
+#include <portable.h>
+};
+void _mon_putc(char c){
+    Fw::Buffer data(reinterpret_cast<U8*>(&c), 1); 
+    // RefDemo::comDriver.get_ByteStreamSend_InputPort(0)->invoke(data); 
+}
+    void vApplicationStackOverflowHook( TaskHandle_t xTask,
+                                        char * pcTaskName ){}
+    void vApplicationMallocFailedHook(void){}
 /**
  * \brief print command line help message
  *

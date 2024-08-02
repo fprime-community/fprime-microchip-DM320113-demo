@@ -14,7 +14,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/fprime/cmake/FPrime.cmake")
 # NOTE: register custom targets between these two lines
 fprime_setup_included_code()
 
-
+include("${CMAKE_CURRENT_LIST_DIR}/same70linker.cmake")
 # This includes project-wide objects
 include("${CMAKE_CURRENT_LIST_DIR}/project.cmake")
 

@@ -38,10 +38,10 @@ module RefDemo {
     stack size Default.STACK_SIZE \
     priority 101
 
-   instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 100
+  # instance cmdSeq: Svc.CmdSequencer base id 0x0600 \
+  #  queue size Default.QUEUE_SIZE \
+  #  stack size Default.STACK_SIZE \
+  #  priority 100
 
   instance comQueue: Svc.ComQueue base id 0x0700 \
       queue size Default.QUEUE_SIZE \
@@ -53,20 +53,15 @@ module RefDemo {
     stack size Default.STACK_SIZE \
     priority 100
 
-  instance fileManager: Svc.FileManager base id 0x0900 \
-    queue size 30 \
-    stack size Default.STACK_SIZE \
-    priority 100
-
   instance fileUplink: Svc.FileUplink base id 0x0A00 \
     queue size 30 \
     stack size Default.STACK_SIZE \
     priority 100
 
-  instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
-    queue size Default.QUEUE_SIZE \
-    stack size Default.STACK_SIZE \
-    priority 98
+  #instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
+  #  queue size Default.QUEUE_SIZE \
+  #  stack size Default.STACK_SIZE \
+  #  priority 98
 
   # comment in Svc.TlmChan or Svc.TlmPacketizer
   # depending on which form of telemetry downlink
@@ -105,7 +100,7 @@ module RefDemo {
 
   instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
 
-  instance fatalHandler: Svc.FatalHandler base id 0x4300
+  # instance fatalHandler: Svc.FatalHandler base id 0x4300
 
   instance bufferManager: Svc.BufferManager base id 0x4400
 

@@ -46,6 +46,7 @@ struct TopologyState {
  * }
  * ```
  */
+
 namespace PingEntries {
 namespace blockDrv {
 enum { WARN = 3, FATAL = 5 };
@@ -81,6 +82,9 @@ namespace rateGroup2 {
 enum { WARN = 3, FATAL = 5 };
 }
 namespace rateGroup3 {
+enum { WARN = 3, FATAL = 5 };
+}
+namespace comDriver {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries

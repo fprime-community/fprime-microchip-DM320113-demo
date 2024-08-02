@@ -20,16 +20,15 @@ module RefDemo {
     instance blockDrv
     instance tlmSend
     instance cmdDisp
-    instance cmdSeq
+   # instance cmdSeq
     instance comDriver
     instance comQueue
     instance comStub
     instance deframer
-    instance eventLogger
+    #instance eventLogger
     instance fatalAdapter
-    instance fatalHandler
+    #instance fatalHandler
     instance fileDownlink
-    instance fileManager
     instance fileUplink
     instance bufferManager
     instance framer
@@ -48,7 +47,7 @@ module RefDemo {
 
     command connections instance cmdDisp
 
-    event connections instance eventLogger
+    #event connections instance eventLogger
 
     param connections instance prmDb
 
@@ -66,7 +65,7 @@ module RefDemo {
 
     connections Downlink {
 
-      eventLogger.PktSend -> comQueue.comQueueIn[0]
+      #eventLogger.PktSend -> comQueue.comQueueIn[0]
       tlmSend.PktSend -> comQueue.comQueueIn[1]
       fileDownlink.bufferSendOut -> comQueue.buffQueueIn[0]
 
@@ -87,7 +86,7 @@ module RefDemo {
     }
 
     connections FaultProtection {
-      eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
+      #eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
     }
 
     connections RateGroups {
@@ -102,7 +101,7 @@ module RefDemo {
 
       # Rate group 2
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
-      rateGroup2.RateGroupMemberOut[0] -> cmdSeq.schedIn
+      #rateGroup2.RateGroupMemberOut[0] -> cmdSeq.schedIn
 
       # Rate group 3
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
@@ -111,10 +110,10 @@ module RefDemo {
       rateGroup3.RateGroupMemberOut[2] -> bufferManager.schedIn
     }
 
-    connections Sequencer {
-     cmdSeq.comCmdOut -> cmdDisp.seqCmdBuff
-     cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
-    }
+   connections Sequencer {
+   #  cmdSeq.comCmdOut -> cmdDisp.seqCmdBuff
+   #  cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
+   }
 
     connections Uplink {
 
@@ -135,6 +134,8 @@ module RefDemo {
 
     connections RefDemo {
       # Add here connections to user-defined components
+      # comDriver.allocate -> bufferManager.bufferGetCallee # JUST ADDED
+      # comDriver.deallocate -> bufferManager.bufferSendIn # JUST ADDED
     }
 
   }

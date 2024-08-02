@@ -24,12 +24,5 @@ set(SOURCE_FILES
   "${CMAKE_CURRENT_LIST_DIR}/usart1Driver.cpp"
   ${USART1SRC_FILES}  # Add all source files from the usart1src directory
 )
-
-# Uncomment and add any modules that this component depends on, else
-# they might not be available when cmake tries to build this component.
-
-# set(MOD_DEPS
-#     Add your dependencies here
-# )
-
+set(MOD_DEPS Os)
 register_fprime_module()

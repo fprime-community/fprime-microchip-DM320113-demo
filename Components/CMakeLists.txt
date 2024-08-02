@@ -1,5 +1,3 @@
 # Include project-wide components here
 
-# add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/MyComponent")add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/SamE70UartDriver/")
-# add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/FreeRTOSUartDriver/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/usart1Driver/")

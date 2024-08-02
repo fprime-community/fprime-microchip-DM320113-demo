@@ -19,7 +19,7 @@
 using namespace RefDemo;
 
 // Instantiate a system logger that will handle Fw::Logger::logMsg calls
-Os::Log logger;
+// Os::Log logger;
 
 // The reference topology uses a malloc-based allocator for components that need to allocate memory during the
 // initialization phase.
@@ -51,7 +51,7 @@ enum TopologyConstants {
     HEALTH_WATCHDOG_CODE = 0x123,
     COMM_PRIORITY = 100,
     // bufferManager constants
-    FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + HASH_DIGEST_LENGTH + Svc::FpFrameHeader::SIZE,
+    FRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)) + Svc::FpFrameHeader::SIZE, // removed HASH_DIGEST_LENGTH +
     FRAMER_BUFFER_COUNT = 30,
     DEFRAMER_BUFFER_SIZE = FW_MAX(FW_COM_BUFFER_MAX_SIZE, FW_FILE_BUFFER_MAX_SIZE + sizeof(U32)),
     DEFRAMER_BUFFER_COUNT = 30,
@@ -65,8 +65,8 @@ Svc::Health::PingEntry pingEntries[] = {
     {PingEntries::blockDrv::WARN, PingEntries::blockDrv::FATAL, "blockDrv"},
     {PingEntries::tlmSend::WARN, PingEntries::tlmSend::FATAL, "chanTlm"},
     {PingEntries::cmdDisp::WARN, PingEntries::cmdDisp::FATAL, "cmdDisp"},
-    {PingEntries::cmdSeq::WARN, PingEntries::cmdSeq::FATAL, "cmdSeq"},
-    {PingEntries::eventLogger::WARN, PingEntries::eventLogger::FATAL, "eventLogger"},
+    // {PingEntries::cmdSeq::WARN, PingEntries::cmdSeq::FATAL, "cmdSeq"},
+    // {PingEntries::eventLogger::WARN, PingEntries::eventLogger::FATAL, "eventLogger"},
     {PingEntries::fileDownlink::WARN, PingEntries::fileDownlink::FATAL, "fileDownlink"},
     {PingEntries::fileManager::WARN, PingEntries::fileManager::FATAL, "fileManager"},
     {PingEntries::fileUplink::WARN, PingEntries::fileUplink::FATAL, "fileUplink"},
@@ -85,7 +85,7 @@ Svc::Health::PingEntry pingEntries[] = {
  */
 void configureTopology() {
     // Command sequencer needs to allocate memory to hold contents of command sequences
-    cmdSeq.allocateBuffer(0, mallocator, CMD_SEQ_BUFFER_SIZE);
+    // cmdSeq.allocateBuffer(0, mallocator, CMD_SEQ_BUFFER_SIZE);
 
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
@@ -199,7 +199,7 @@ void teardownTopology(const TopologyState& state) {
     (void)comDriver.join(nullptr);
 
     // Resource deallocation
-    cmdSeq.deallocateBuffer(mallocator);
+    // cmdSeq.deallocateBuffer(mallocator);
     bufferManager.cleanup();
 }
 };  // namespace RefDemo
