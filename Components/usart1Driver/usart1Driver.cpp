@@ -68,7 +68,7 @@ namespace Components {
 
   void usart1Driver::startReadThread(int priority, size_t stackSize) {
     Os::TaskString task("SerReader");
-    Os::Task::TaskStatus stat =
+    // Os::Task::TaskStatus stat = (UPDATED FPP NOT LIKING)
         this->m_readTask.start(task, serialReadTaskEntry, this, priority, stackSize);
     // FW_ASSERT(stat == Os::Task::TASK_OK, stat);
   }
@@ -78,7 +78,7 @@ namespace Components {
   }
 
   void usart1Driver::join(void** value_ptr) {
-    this->m_readTask.join(value_ptr);
+    this->m_readTask.join();
   }
 
   // ----------------------------------------------------------------------
@@ -118,7 +118,7 @@ namespace Components {
         Drv::RecvStatus status = Drv::RecvStatus::RECV_OK; // Assuming the status is OK
         comp->recv_out(0, fwBuffer, status);
       }
-      Os::Task::delay(100); // Delay to prevent busy loop
+      static NATIVE_UINT_TYPE delay(100); // Delay to prevent busy loop
     }
   }
 

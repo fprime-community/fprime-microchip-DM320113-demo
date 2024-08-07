@@ -175,7 +175,7 @@ void startSimulatedCycle(U32 milliseconds) {
     // Main loop
     while (cycling) {
         RefDemo::blockDrv.callIsr();
-        Os::Task::delay(milliseconds);
+        static NATIVE_UINT_TYPE delay(milliseconds);
 
         cycleLock.lock();
         cycling = cycleFlag;
